@@ -1,16 +1,49 @@
+// src/pages/LogIn.jsx
+import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
+import { useAppDispatch, useAuth } from "../hooks";
+import { loginUser } from "../redux/actions/authActions";
 
 export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const dispatch = useAppDispatch();
+  const { loading, error, isAuthenticated } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(form));
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Rediriger vers la page d'accueil ou autre
+      console.log("Login successful!");
+    }
+  }, [isAuthenticated]);
+
   return (
     <div>
-      <NavBar />
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <form className="bg-white shadow-lg rounded-xl p-6 w-80">
-          <h2 className="text-xl font-bold mb-4">Connexion</h2>
-          <input type="email" placeholder="Email" className="w-full border rounded-lg p-2 mb-3"/>
-          <input type="password" placeholder="Mot de passe" className="w-full border rounded-lg p-2 mb-3"/>
-          <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-            Se connecter
+      
+      <div className="login-container">
+        <form onSubmit={handleSubmit} className="login-form">
+          <h2>Connexion</h2>
+          {error && <div className="error-message">{error}</div>}
+          <input
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Mot de passe"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
         </form>
       </div>

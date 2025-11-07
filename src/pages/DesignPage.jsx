@@ -1,12 +1,11 @@
 import React from "react";
 import FootballKitDesigner from "../components/FootballKitDesigner";
-import NavBar from "../components/NavBar"
 
 export default function DesignPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-700 to-pink-600 p-6">
       {/* Header */}
-      <NavBar/>
+      
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold text-white drop-shadow-lg">
           🏆 Personnalise ton Maillot
